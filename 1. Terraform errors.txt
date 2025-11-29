@@ -1,0 +1,164 @@
+==============================================================================
+Task         : Terraform CLI
+Description  : Execute terraform commands
+Version      : 1.0.0
+==============================================================================
+[command]/usr/bin/terraform version
+Terraform v1.6.0
+on linux_amd64
++ provider registry.terraform.io/hashicorp/azurerm v3.95.0
+
+WARNING: Provider azurerm (3.95.0) requires Terraform >= 1.7.0.  
+You are using Terraform 1.6.0.
+
+##[warning]Version mismatch detected. This may cause provider initialization failure.
+
+==============================================================================
+##[section]Starting: terraform init
+==============================================================================
+
+[command]/usr/bin/terraform init -backend-config=backend.conf
+
+Initializing the backend...
+
+Successfully configured the backend "azurerm"! Terraform will automatically
+use this backend unless the backend configuration changes.
+
+Initializing provider plugins...
+- Finding hashicorp/azurerm versions matching "3.95.0"...
+- Installing hashicorp/azurerm v3.95.0...
+- Installed hashicorp/azurerm v3.95.0 (self-signed, key ID XXXXXXXXX)
+
+Error: Unsupported Terraform Core version
+
+  provider registry.terraform.io/hashicorp/azurerm v3.95.0 requires
+  Terraform version >= 1.7.0. Your Terraform version is 1.6.0.
+
+##[error]Terraform init failed.
+
+##[section]Finishing: terraform init
+==============================================================================
+
+
+==============================================================================
+##[section]Starting: terraform validate
+==============================================================================
+
+[command]/usr/bin/terraform validate
+
+╷
+│ Error: Missing required argument
+│ 
+│   on main.tf line 28, in resource "azurerm_storage_account" "stg_acc":
+│   28: resource "azurerm_storage_account" "stg_acc" {
+│ 
+│ The argument "resource_group_name" is required, but no definition was found.
+│ 
+│ NOTE: You used `var.resource_group`, which does not exist.  
+│ Did you mean `var.resource_group_name`?
+╵
+
+╷
+│ Error: Invalid attribute value type
+│ 
+│   on main.tf line 57:
+│   sku_name = "Y1"
+│ 
+│ SKU Y1 is not valid for Linux Consumption plans.  
+│ Valid SKUs: Y1, EP1, EP2, EP3 for Windows only.
+╵
+
+╷
+│ Error: Invalid value for application_type
+│ 
+│   on main.tf line 89:
+│   application_type = "web-app"
+│ 
+│ Expected: "web" or "other"
+│ Got     : "web-app"
+╵
+
+╷
+│ Error: Unsupported argument value
+│ 
+│   on main.tf line 121:
+│   functions_extension_version = "~5"
+│ 
+│ Function app runtime ~5 is not supported for Linux Python apps.
+│ Use "~4".
+╵
+
+╷
+│ Error: Incorrect attribute value type
+│ 
+│   on main.tf line 136:
+│   always_on = "true"
+│ 
+│ Expected: boolean
+│ Received: string
+╵
+
+##[error]Terraform validate failed.
+
+##[section]Finishing: terraform validate
+==============================================================================
+
+
+==============================================================================
+##[section]Starting: terraform plan
+==============================================================================
+
+[command]/usr/bin/terraform plan -out=tfplan
+
+╷
+│ Error: Terraform initialization required
+│ 
+│ Terraform has not been successfully initialized.  
+│ Run "terraform init".
+╵
+
+##[error]Terraform plan failed.
+
+##[section]Finishing: terraform plan
+==============================================================================
+
+
+==============================================================================
+##[section]STARTING: terraform apply
+==============================================================================
+
+[command]/usr/bin/terraform apply tfplan
+
+Error: Plan file not found
+  No plan file at path: tfplan
+
+##[error]Terraform apply failed.
+
+##[section]Finishing: terraform apply
+==============================================================================
+
+
+==============================================================================
+##[section]Starting: Azure CLI ZIP Deploy
+==============================================================================
+
+[command]/usr/bin/pwsh -NoLogo -NoProfile -NonInteractive -Command . . .
+
+ERROR: Resource group '' not found.
+ERROR: FunctionApp name '' not found.
+ERROR: Deployment failed because function app creation failed in previous steps.
+
+##[error]Azure CLI zip deployment failed.
+
+##[section]Finishing: Azure CLI ZIP Deploy
+==============================================================================
+
+
+========================= PIPELINE SUMMARY =========================
+Terraform Init       : ❌ Failed (Version Mismatch)
+Terraform Validate   : ❌ Failed (Multiple config errors)
+Terraform Plan       : ❌ Failed (Init not successful)
+Terraform Apply      : ❌ Failed (Plan missing)
+Zip Deploy           : ❌ Failed (Function app not created)
+====================================================================
+##[error]Pipeline failed due to Terraform configuration errors.

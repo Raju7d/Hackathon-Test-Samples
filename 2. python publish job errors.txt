@@ -1,0 +1,105 @@
+================================================================================
+Task         : Use Python version
+Description  : Set the Python version to use
+Version      : 0.*
+================================================================================
+
+##[error]Task 'UsePythonVersion' not found. Check the following:
+ - Correct task name
+ - Correct task version
+ - Task is installed in the agent
+
+##[error]The task name: 'UsePythonVersion@1' references a version that does not exist.
+##[error]Task failed while initializing.
+
+##[section]Finishing: UsePythonVersion@1
+================================================================================
+
+
+================================================================================
+##[section]Starting: Install python dependencies
+================================================================================
+
+[command]/bin/bash --noprofile --norc /home/vsts/work/_temp/76c2a889.sh
+Looking in indexes: https://pypi.org/simple
+Requirement already satisfied: pip in /usr/lib/python3/dist-packages (23.0.1)
+
+[command]/bin/bash -c pip install --target="/home/vsts/work/1/s/EVENT_GRID_TRIGGER_221671/src/.python_packages/lib/site-packages" \
+-r /home/vsts/work/1/s//requirements.txt
+
+ERROR: Could not open requirements file: [Errno 2] No such file or directory: '/home/vsts/work/1/s//requirements.txt'
+
+##[warning]Variable 'CODE_LOCATION' is not defined.
+##[error]Bash exited with code '1'.
+
+##[section]Finishing: Install python dependencies
+================================================================================
+
+
+================================================================================
+##[section]Starting: Zip the build package
+================================================================================
+
+Task         : Archive Files
+Description  : Archive files using compression methods
+Version      : 2.226.0
+================================================================================
+
+Checking directory: /home/vsts/work/1/s/EVENT_GRID_TRIGGER_221671/src
+Directory exists ✔
+
+Archiving files...
+Successfully created archive: /home/vsts/work/1/a/azureFunction.zip
+
+##[section]Finishing: Zip the build package
+================================================================================
+
+
+================================================================================
+##[section]Starting: Copy zip to infra folder
+================================================================================
+
+Copying file: azureFunction.zip
+Destination: /home/vsts/work/1/s/infra/eventgrid_generation_infra
+
+Files copied successfully ✔
+
+##[section]Finishing: Copy zip to infra folder
+================================================================================
+
+
+================================================================================
+##[section]Starting: Zip the publish package
+================================================================================
+
+Task         : Archive Files
+Description  : Archive files using compression methods
+Version      : 2.226.0
+================================================================================
+
+rootFolderOrFile: /home/vsts/work/1/s/Test
+
+##[error]Error: ENOENT: no such file or directory, scandir '/home/vsts/work/1/s/Test'
+##[error]rootFolderOrFile '/home/vsts/work/1/s/Test' does not exist.
+##[error]Cannot continue. Aborting archive step.
+
+##[section]Finishing: Zip the publish package
+================================================================================
+
+
+================================================================================
+##[section]Starting: Publish Artifact
+================================================================================
+
+##[command]Copying file: /home/vsts/work/1/a/azureFunction.zip
+Artifact name: azureFunction
+
+Uploaded azureFunction.zip successfully ✔
+
+##[section]Finishing: Publish Artifact
+================================================================================
+
+
+================================================================================
+##[error]The job build_publish_artifact failed due to previous errors.
+================================================================================
